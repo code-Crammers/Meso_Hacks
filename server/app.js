@@ -22,7 +22,7 @@ app.use(cookieParser());
     await connect(process.env.MONGO_URI);
     console.log("DB connected");
     var port = process.env.PORT || 3001;
-    server.listen(port, () => console.log(`Server started on port ${port}`));
+    app.listen(port, () => console.log(`Server started on port ${port}`));
   } catch (err) {
     console.log(err.message);
   }
