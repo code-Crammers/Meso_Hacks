@@ -1,27 +1,26 @@
-import mongoose from "mongoose";
 import sequelize from "../database/db.js";
 import { Sequelize } from "sequelize-cockroachdb";
 
-const User = sequelize.define("user", {
+const Doctor = sequelize.define("doctor", {
   _id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
+  department: {
+    type: Sequelize.TEXT,
+  },
   name: {
     type: Sequelize.TEXT,
   },
-  email: {
-    type: Sequelize.TEXT,
-  },
-  password: {
+  hospital: {
     type: Sequelize.TEXT,
   },
   image: {
-    type: Sequelize.TEXT,
+    type: String,
     defaultValue:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   },
 });
 
-export default User;
+export default Doctor;

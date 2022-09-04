@@ -1,8 +1,7 @@
-import mongoose from "mongoose";
 import sequelize from "../database/db.js";
 import { Sequelize } from "sequelize-cockroachdb";
 
-const User = sequelize.define("user", {
+const Hospital = sequelize.define("hospital", {
   _id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -11,17 +10,20 @@ const User = sequelize.define("user", {
   name: {
     type: Sequelize.TEXT,
   },
-  email: {
+  location: {
     type: Sequelize.TEXT,
   },
-  password: {
+  speciality: {
     type: Sequelize.TEXT,
+  },
+  baseAmount: {
+    type: Sequelize.INTEGER,
   },
   image: {
-    type: Sequelize.TEXT,
+    type: String,
     defaultValue:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   },
 });
 
-export default User;
+export default Hospital;

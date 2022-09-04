@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
+import { Sequelize } from "sequelize-cockroachdb";
 
-function connect(url) {
-  try {
-    return mongoose.connect(url);
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+import "dotenv/config";
+const sequelize = new Sequelize(process.env.COCKROACH_URI, {
+  dialectOptions: {
+    application_name: "test",
+  },
+});
 
-export { connect };
+export default sequelize;
