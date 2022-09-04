@@ -5,6 +5,9 @@ import "dotenv/config";
 
 async function registerUser(req, res) {
   try {
+    await User.sync({
+      force: false,
+    });
     const { name, email, password, image } = req.body;
 
     const user = await User.findOne({ email });
@@ -13,19 +16,14 @@ async function registerUser(req, res) {
     const newUser = await User.create({ ...req.body });
     if (!newUser) throw new Error("Something went wrong!!");
 
-    const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_COOKIE_EXPIRES_IN,
-    });
-    res.cookie("JWT", token, {
-      expiresIn: process.env.JWT_COOKIE_EXPIRES_IN,
-    });
+    const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
+    res.cookie("JWT", token);
 
     res.json({
       status: "success",
       msg: "User registered successfully",
       data: newUser,
     });
-    // res.json(newUser)
   } catch (err) {
     res.json({
       status: "error",
@@ -65,18 +63,7 @@ async function loginUser(req, res) {
 }
 async function getAllUsers(req, res) {
   try {
-    // const keyword = req.query.search
-    //   ? {
-    //       $or: [
-    //         { name: { $regex: req.query.search, $options: "i" } },
-    //         { email: { $regex: req.query.search, $options: "i" } },
-    //       ],
-    //     }
-    //   : {};
-    const users = await User.find();
-    // const users = await User.find(keyword).findIndex({
-    //   _id: { $ne: req.user._id },
-    // })
+    const users = await User.findAll();
     res.json(users);
   } catch (err) {
     res.json(err.message);
